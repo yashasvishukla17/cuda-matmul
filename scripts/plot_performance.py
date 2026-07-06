@@ -1,4 +1,4 @@
-#STEP 4
+#step 4 plots
 
 import matplotlib.pyplot as plt
 
@@ -16,12 +16,24 @@ gflops = [
     344.457
 ]
 
-plt.figure(figsize=(8,5))
-plt.bar(versions, gflops)
+plt.figure(figsize=(9,5))
+
+bars = plt.bar(versions, gflops)
 
 plt.title("Matrix Multiplication Performance Comparison")
-plt.ylabel("GFLOPS")
 plt.xlabel("Implementation")
+plt.ylabel("GFLOPS")
+
+for bar in bars:
+    height = bar.get_height()
+    plt.text(
+        bar.get_x() + bar.get_width()/2,
+        height,
+        f"{height:.2f}",
+        ha="center",
+        va="bottom",
+        fontsize=9
+    )
 
 plt.tight_layout()
 
