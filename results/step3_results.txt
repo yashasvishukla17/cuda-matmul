@@ -1,0 +1,15 @@
+OpenMP Parallel Matrix Multiplication
+
+Threads    Time(s)     GFLOPS
+1          0.150017    1.78936
+2          0.062262    4.31142
+4          0.030932    8.67824
+8          0.047623    5.63674
+16         0.051329    5.22967
+
+Best configuration:
+4 threads
+Time: 0.030932 s
+GFLOPS: 8.67824
+
+Overall speedup vs naive CPU: 12.74x

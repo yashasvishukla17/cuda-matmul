@@ -1,0 +1,12 @@
+Naive CUDA Matrix Multiplication
+
+GPU: NVIDIA RTX 3050 Laptop
+Matrix Size: 512 x 512
+
+Execution Time: 0.0007793 s
+GFLOPS: 344.457
+
+C[0][0] = 512
+
+Overall Speedup vs Naive CPU: 505x
+Overall Speedup vs OpenMP: 39.7x

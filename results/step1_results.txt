@@ -1,0 +1,6 @@
+Naive CPU Matrix Multiplication
+
+Matrix Size (N): 512
+Execution Time: 0.393936 seconds
+GFLOPS: 0.681419
+Approx. Memory Bandwidth: 0.00798537 GB/s

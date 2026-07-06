@@ -1,0 +1,8 @@
+Cache-Tiled CPU Matrix Multiplication
+
+Matrix Size (N): 512
+Execution Time: 0.181465 seconds
+GFLOPS: 1.47927
+Approx. Memory Bandwidth: 0.0173352 GB/s
+
+Speedup over naive CPU: 2.17x
