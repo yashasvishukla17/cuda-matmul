@@ -42,7 +42,7 @@ __global__ void matmul_naive(const float* A,
 
 int main()
 {
-    const int N = 512;
+    const int N = 2048;
     size_t bytes = N * N * sizeof(float);
 
     // Host memory
