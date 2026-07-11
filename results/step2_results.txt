@@ -1,8 +1,52 @@
-Cache-Tiled CPU Matrix Multiplication
+==========================================
+Step 2 - Cache Tiling Benchmark
+==========================================
 
-Matrix Size (N): 512
-Execution Time: 0.181465 seconds
-GFLOPS: 1.47927
-Approx. Memory Bandwidth: 0.0173352 GB/s
+Hardware
+--------
+CPU : Intel Core i5-12500H
+Matrix Size : 512 x 512
 
-Speedup over naive CPU: 2.17x
+Compiler
+--------
+cl /O2
+
+==========================================
+Tile Size = 16
+==========================================
+
+Execution Time : 1.02639 seconds
+GFLOPS         : 0.261533
+Memory BW      : 0.00306484 GB/s
+
+==========================================
+Tile Size = 32
+==========================================
+
+Execution Time : 0.181465 seconds
+GFLOPS         : 1.47927
+Memory BW      : 0.0173352 GB/s
+
+==========================================
+Tile Size = 64
+==========================================
+
+Execution Time : 1.02106 seconds
+GFLOPS         : 0.262899
+Memory BW      : 0.00308085 GB/s
+
+==========================================
+Summary
+==========================================
+
+| Tile Size | Time (s) | GFLOPS | Memory BW (GB/s) |
+|-----------|----------|---------|------------------|
+| 16 | 1.02639 | 0.261533 | 0.00306484 |
+| 32 | 0.181465 | 1.47927 | 0.0173352 |
+| 64 | 1.02106 | 0.262899 | 0.00308085 |
+
+Best Tile Size: 32
+
+Reason:
+Tile size 32 provided the highest GFLOPS and lowest execution time on this CPU,
+indicating the best cache utilization among the tested configurations.

@@ -1,0 +1,4 @@
+Matrix Size (N): 2048
+Execution Time: 30.3196 ms
+GFLOPS: 566.625
+C[0][0] = 2048

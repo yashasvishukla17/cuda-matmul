@@ -1,0 +1,33 @@
+Step 2 - Tile Size Benchmark
+
+Matrix Size (N): 512
+
+-------------------------------------------------
+Tile Size = 16
+-------------------------------------------------
+Execution Time: 1.02639 seconds
+GFLOPS: 0.261533
+Approx. Memory Bandwidth: 0.00306484 GB/s
+
+-------------------------------------------------
+Tile Size = 32
+-------------------------------------------------
+Execution Time: 0.181465 seconds
+GFLOPS: 1.47927
+Approx. Memory Bandwidth: 0.0173352 GB/s
+
+-------------------------------------------------
+Tile Size = 64
+-------------------------------------------------
+Execution Time: 1.02106 seconds
+GFLOPS: 0.262899
+Approx. Memory Bandwidth: 0.00308085 GB/s
+
+-------------------------------------------------
+Conclusion
+-------------------------------------------------
+Best Tile Size: 32
+
+Reason:
+Tile size 32 achieved the highest GFLOPS and lowest execution time,
+making it the optimal cache tile size on the test system.
