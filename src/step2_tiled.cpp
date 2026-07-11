@@ -45,8 +45,8 @@ int main()
 
     auto start = chrono::high_resolution_clock::now();
 
-    // Benchmark Tile Size = 64
-    matmul_tiled(A, B, C, N, 64);
+    // Benchmark Tile Size = 32
+    matmul_tiled(A, B, C, N, 32);
 
     auto end = chrono::high_resolution_clock::now();
 
@@ -58,7 +58,7 @@ int main()
     double bytesMoved = 3.0 * N * N * sizeof(float);
     double bandwidth = (bytesMoved / seconds) / 1e9;
 
-    cout << "Tile Size: 64" << endl;
+    cout << "Tile Size: 32" << endl;
     cout << "Matrix Size (N): " << N << endl;
     cout << "Execution Time: " << seconds << " seconds" << endl;
     cout << "GFLOPS: " << gflops << endl;

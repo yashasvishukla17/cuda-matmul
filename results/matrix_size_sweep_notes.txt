@@ -1,0 +1,33 @@
+
+===== Matrix Size Sweep =====
+
+N = 64
+CPU        : 0.9128 ms
+GPU Naive  : 0.45872 ms
+GPU Tiled  : 0.154624 ms
+-----------------------------
+N = 128
+CPU        : 2.8345 ms
+GPU Naive  : 0.044 ms
+GPU Tiled  : 0.02048 ms
+-----------------------------
+N = 256
+CPU        : 23.1406 ms
+GPU Naive  : 0.35264 ms
+GPU Tiled  : 0.23552 ms
+-----------------------------
+N = 512
+CPU        : 211.577 ms
+GPU Naive  : 0.697024 ms
+GPU Tiled  : 0.470016 ms
+-----------------------------
+N = 1024
+CPU        : 1876.8 ms
+GPU Naive  : 4.89814 ms
+GPU Tiled  : 3.67811 ms
+-----------------------------
+N = 2048
+CPU        : 37453.6 ms
+GPU Naive  : 37.9428 ms
+GPU Tiled  : 28.9362 ms
+-----------------------------
