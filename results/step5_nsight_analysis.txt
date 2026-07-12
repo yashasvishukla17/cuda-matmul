@@ -1,0 +1,63 @@
+=====================================================
+STEP 5 - Nsight Compute Analysis
+=====================================================
+
+Kernel:
+Shared Memory Tiled CUDA Matrix Multiplication
+
+GPU:
+NVIDIA GeForce RTX 3050 Laptop GPU
+
+-----------------------------------------------------
+1. GPU Speed Of Light Throughput
+-----------------------------------------------------
+
+Compute (SM) Throughput      : 97.03%
+Memory Throughput            : 97.03%
+L1/TEX Cache Throughput      : 97.03%
+L2 Cache Throughput          : 15.34%
+DRAM Throughput              : 18.53%
+
+Analysis:
+The shared-memory tiled CUDA kernel achieves approximately 97% utilization of the GPU's compute resources.
+Shared memory allows matrix tiles to be reused multiple times, greatly reducing accesses to global memory.
+As a result, DRAM utilization remains relatively low (18.53%), indicating that the kernel is much less memory-bound than the naive CUDA implementation.
+
+-----------------------------------------------------
+2. Occupancy
+-----------------------------------------------------
+
+Theoretical Occupancy        : 100%
+Achieved Occupancy           : 99.74%
+Active Warps per SM          : 47.87 / 48
+
+Analysis:
+Nearly maximum occupancy was achieved.
+Almost every warp slot on each Streaming Multiprocessor remained active during execution.
+This allows the GPU scheduler to effectively hide memory latency and maximize parallel execution.
+
+-----------------------------------------------------
+3. Launch Configuration
+-----------------------------------------------------
+
+Block Size                   : 256 threads (16 x 16)
+Registers Per Thread         : 38
+
+Analysis:
+The kernel launch configuration is well balanced.
+A 16x16 thread block provides good occupancy while keeping register usage reasonable.
+No launch configuration changes are required.
+
+-----------------------------------------------------
+4. Overall Conclusion
+-----------------------------------------------------
+
+The Nsight Compute profile confirms that the shared-memory tiled CUDA kernel is highly optimized.
+
+Key observations:
+- Nearly full compute utilization (97.03%).
+- Near-maximum occupancy (99.74%).
+- Low DRAM utilization due to effective shared-memory reuse.
+- High arithmetic intensity compared to the naive CUDA implementation.
+
+Overall, the tiled implementation shifts matrix multiplication from being primarily memory-bound toward being compute-bound, resulting in significantly higher performance.
