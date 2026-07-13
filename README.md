@@ -40,9 +40,9 @@ The primary objectives of this project were:
 
 | Component | Specification |
 |-----------|---------------|
-| CPU | *Replace with your processor model* |
-| GPU | NVIDIA GeForce RTX 3050 Laptop GPU |
-| RAM | *Replace with installed RAM* |
+| CPU | Intel Core 5 210H (2.20 GHz) |
+| GPU | NVIDIA GeForce RTX 3050 Laptop GPU (4 GB) |
+| RAM | 16 GB (15.6 GB usable) |
 | Operating System | Windows 11 |
 
 ### Software
@@ -286,28 +286,7 @@ This experiment demonstrated how computational workload affects hardware efficie
 
 # Performance Results
 
-The table below summarizes the performance of each implementation for the primary benchmark matrix size.
-
-| Implementation | Matrix Size | Execution Time | GFLOPS | Key Improvement |
-|----------------|------------:|---------------:|--------:|-----------------|
-| Naive CPU | 512 × 512 | *(your result)* | *(your result)* | Baseline implementation |
-| Cache-Tiled CPU | 512 × 512 | 0.159 s | 1.69 | Improved cache locality |
-| OpenMP CPU | 512 × 512 | *(your result)* | *(your result)* | Multi-core parallelism |
-| Naive CUDA | 2048 × 2048 | 115.23 ms | 149.09 | Massive GPU parallelism |
-| Shared-Memory CUDA | 2048 × 2048 | *(your Step 5 result)* | *(your Step 5 result)* | Shared-memory tile reuse |
-
-Overall observations:
-
-- Cache tiling significantly improved CPU performance compared to the naive implementation.
-- OpenMP further reduced execution time by utilizing multiple CPU cores.
-- CUDA provided substantial acceleration through thousands of parallel GPU threads.
-- The shared-memory CUDA kernel achieved the best overall performance by reducing global memory traffic and increasing arithmetic intensity.
-
----
-
-# Performance Results
-
-The table below summarizes the performance of each implementation using the benchmark results collected during the project.
+The table below summarizes the performance of each implementation on its benchmark matrix size, along with speedup relative to the naive CPU baseline.
 
 | Implementation | Matrix Size | Execution Time | GFLOPS | Speedup vs Naive CPU | Key Improvement |
 |----------------|------------:|---------------:|--------:|---------------------:|-----------------|
@@ -317,17 +296,14 @@ The table below summarizes the performance of each implementation using the benc
 | Naive CUDA | 512 × 512 | 0.0007793 s | 344.457 | 505× | GPU parallel execution |
 | Shared-Memory CUDA | 2048 × 2048 | 30.3196 ms | 566.625 | — | Shared-memory tile reuse |
 
-## Summary
+> **Note:** The Shared-Memory CUDA benchmark was run at 2048 × 2048 instead of 512 × 512 to better illustrate GPU scalability at a larger problem size. Because of this, its execution time and GFLOPS are not directly comparable to the 512 × 512 rows above — only the relative ranking (fastest overall) holds. A same-size comparison against Naive CUDA is a planned follow-up (see Future Improvements).
 
-Each optimization introduced measurable performance improvements:
+Overall observations:
 
-- Cache tiling reduced cache misses and improved CPU data reuse.
-- OpenMP utilized multiple CPU cores to significantly decrease execution time.
-- CUDA accelerated computation through thousands of parallel GPU threads.
-- Shared-memory tiling further optimized GPU memory accesses, producing the highest computational throughput observed in this project.
-
-The progression demonstrates how hardware-aware optimizations can transform a straightforward algorithm into a highly efficient parallel implementation.
-> **Note:** The Shared-Memory CUDA benchmark was executed using a larger matrix (2048 × 2048) to better demonstrate GPU scalability. Direct numerical comparisons with the 512 × 512 benchmarks should therefore be interpreted with this difference in mind.
+- Cache tiling significantly improved CPU performance compared to the naive implementation.
+- OpenMP further reduced execution time by utilizing multiple CPU cores, though scaling was sub-linear due to thread and memory bandwidth overhead.
+- CUDA provided a substantial speedup through thousands of parallel GPU threads, even in its naive form.
+- The shared-memory CUDA kernel achieved the best overall performance by reducing global memory traffic and increasing arithmetic intensity.
 
 ---
 
@@ -403,6 +379,7 @@ Compute throughput reached approximately **97%**, demonstrating that the GPU's a
 Unlike the naive CUDA implementation, the tiled kernel reused matrix tiles stored in fast on-chip shared memory, greatly reducing accesses to global memory. As a result, DRAM traffic was significantly reduced, allowing the kernel to spend more time performing arithmetic operations instead of waiting on memory.
 
 Overall, the Nsight Compute results validate that the shared-memory implementation efficiently utilizes the GPU architecture and explain the substantial performance improvement observed over the naive CUDA implementation.
+
 Additional profiling observations and notes are available in `results/step5_nsight_analysis.txt`.
 
 ---
@@ -464,6 +441,8 @@ Each optimization stage addressed a different performance bottleneck.
 - OpenMP increased CPU utilization through parallel execution.
 - The naive CUDA kernel leveraged GPU parallelism but remained constrained by global memory accesses.
 - The shared-memory CUDA kernel minimized global memory traffic and made better use of the GPU's memory hierarchy, achieving the highest computational throughput.
+
+One limitation worth noting: the shared-memory kernel was benchmarked at a different matrix size than the earlier stages, so the headline speedup numbers above should be read as directional rather than a strict apples-to-apples comparison. A consistent same-size sweep across all five implementations is the next thing to add.
 
 The project reinforced that algorithm optimization is closely tied to hardware architecture. Understanding memory hierarchy, cache behavior, thread scheduling, and GPU execution models is just as important as understanding the algorithm itself.
 
@@ -546,6 +525,7 @@ ncu step5_cuda_shared.exe
 
 Possible future extensions include:
 
+- Re-run the shared-memory kernel at 512 × 512 for a like-for-like comparison against Naive CUDA.
 - Implement Tensor Core matrix multiplication using WMMA.
 - Compare CUDA performance with cuBLAS.
 - Benchmark larger matrix sizes on higher-end GPUs.
