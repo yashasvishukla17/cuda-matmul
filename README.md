@@ -234,9 +234,9 @@ The shared-memory implementation outperformed the naive CUDA kernel and achieved
 
 Nsight Compute profiling showed:
 
-- Compute Throughput ≈ **97%**
-- Achieved Occupancy ≈ **99.74%**
-- Low DRAM utilization due to effective shared-memory reuse
+- High SM utilization during kernel execution
+- Achieved Occupancy ≈ **99.8%**
+- Reduced DRAM utilization due to effective shared-memory reuse
 
 ### Observations
 
@@ -372,13 +372,13 @@ To better understand GPU performance beyond execution time, the shared-memory CU
 
 The profiler confirms that the shared-memory optimization substantially improved GPU utilization.
 
-The high achieved occupancy indicates that nearly all Streaming Multiprocessors (SMs) remained busy throughout kernel execution. This allowed the GPU to effectively hide memory latency by scheduling other ready warps while stalled warps waited for memory operations.
+The kernel achieved approximately **99.8% achieved occupancy**, indicating that the GPU maintained a large number of active warps during execution. This high occupancy helps hide memory latency by allowing the scheduler to switch between ready warps efficiently.
 
-Compute throughput reached approximately **97%**, demonstrating that the GPU's arithmetic units were heavily utilized during execution.
+Nsight Compute also reported **high SM utilization**, showing that the Streaming Multiprocessors remained busy throughout most of the kernel execution.
 
-Unlike the naive CUDA implementation, the tiled kernel reused matrix tiles stored in fast on-chip shared memory, greatly reducing accesses to global memory. As a result, DRAM traffic was significantly reduced, allowing the kernel to spend more time performing arithmetic operations instead of waiting on memory.
+Compared with the naive CUDA implementation, the tiled kernel reused matrix tiles stored in fast on-chip shared memory, significantly reducing accesses to global memory. This reduced DRAM traffic and increased arithmetic intensity, allowing more time to be spent performing useful computation rather than waiting for memory.
 
-Overall, the Nsight Compute results validate that the shared-memory implementation efficiently utilizes the GPU architecture and explain the substantial performance improvement observed over the naive CUDA implementation.
+Overall, the Nsight Compute profile supports the conclusion that shared-memory tiling improved utilization of the GPU's memory hierarchy and contributed to the observed performance improvement.
 
 Additional profiling observations and notes are available in `results/step5_nsight_analysis.txt`.
 
